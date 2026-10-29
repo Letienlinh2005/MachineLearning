@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Dự đoán – mức béo phì{% endblock %}
+{% block content %}
+<h1>Nhập thông tin của bạn</h1>
+<p class="sub">Chọn đáp án gần đúng nhất với thói quen thường ngày của bạn.</p>
+
+{% if loi %}
+<div class="err"><b>Vui lòng kiểm tra lại:</b><ul>{% for e in loi %}<li>{{ e }}</li>{% endfor %}</ul></div>
+{% endif %}
+
+{% if ket_qua %}
+<div class="result" id="ketqua">
+  <div class="small">Kết quả dự đoán</div>
+  <div class="big">{{ ket_qua.ten }}</div>
+  <div>{{ ket_qua.mo_ta }}</div>
+  <div class="probs">
+    {% for ten, pct, top in ket_qua.chi_tiet %}
+    <div class="row{% if top %} top{% endif %}"><span>{{ ten }}</span><div class="track"><div class="fill" style="width: {{ pct }}%"></div></div><span class="pct">{{ pct }}%</span></div>
+    {% endfor %}
+  </div>
+  <p class="small">Đây chỉ là ước lượng tham khảo từ thói quen sống, không phải chẩn đoán y khoa.</p>
+</div>
+<script>document.getElementById('ketqua').scrollIntoView({behavior: 'smooth'});</script>
+{% endif %}
+
+<form method="post" action="{{ url_for('trang_du_doan') }}">
+  {% for tieu_de, truong in nhom %}
+  <fieldset>
+    <legend>{{ tieu_de }}</legend>
+    {% for f in truong %}
+    <label for="{{ f.name }}">{{ f.label }}</label>
+    {% if f.type == 'number' %}
+      <input type="number" id="{{ f.name }}" name="{{ f.name }}" value="{{ values[f.name] }}"
+             min="{{ f.min }}" max="{{ f.max }}" step="{{ f.step }}" required>
+    {% else %}
+      <select id="{{ f.name }}" name="{{ f.name }}">
+        {% for v, t in f.options %}<option value="{{ v }}"{% if values[f.name] == v|string %} selected{% endif %}>{{ t }}</option>{% endfor %}
+      </select>
+    {% endif %}
+    {% endfor %}
+  </fieldset>
+  {% endfor %}
+  <button class="btn" type="submit">Dự đoán</button>
+</form>
+{% endblock %}

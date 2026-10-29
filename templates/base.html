@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Dự đoán mức béo phì{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="{{ url_for('gioi_thieu') }}">Dự đoán mức béo phì</a>
+      <nav>
+        <a href="{{ url_for('gioi_thieu') }}" {% if request.endpoint == 'gioi_thieu' %}class="on"{% endif %}>Giới thiệu</a>
+        <a href="{{ url_for('trang_du_doan') }}" {% if request.endpoint == 'trang_du_doan' %}class="on"{% endif %}>Dự đoán</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">{% block content %}{% endblock %}</main>
+  <footer class="wrap foot">Kết quả chỉ mang tính tham khảo, không thay thế lời khuyên của bác sĩ hoặc chuyên gia dinh dưỡng.</footer>
+</body>
+</html>

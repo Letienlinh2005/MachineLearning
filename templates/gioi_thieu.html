@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <h1>Bạn đang ở mức cân nặng nào?</h1>
+  <p>Trả lời vài câu hỏi đơn giản về thói quen ăn uống và sinh hoạt hằng ngày. Mô hình trí tuệ nhân tạo sẽ ước lượng mức cân nặng của bạn trong vài giây.</p>
+  <a class="btn" href="{{ url_for('trang_du_doan') }}">Bắt đầu dự đoán</a>
+</section>
+
+<section>
+  <h2>Cách hoạt động</h2>
+  <div class="grid3">
+    <div class="card"><b>1. Nhập thông tin</b><p>Giới tính, tuổi, số bữa ăn, lượng nước uống, thời gian vận động...</p></div>
+    <div class="card"><b>2. Mô hình tính toán</b><p>Mạng nơ-ron được huấn luyện trên hơn 20.000 mẫu dữ liệu về thói quen và mức cân nặng.</p></div>
+    <div class="card"><b>3. Xem kết quả</b><p>Bạn nhận được mức dự đoán và xác suất của từng mức cân nặng.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>7 mức cân nặng mà mô hình phân biệt</h2>
+  <ul class="levels">
+    {% for ten, mo_ta in nhan_vi %}<li><b>{{ ten }}</b> – {{ mo_ta }}</li>{% endfor %}
+  </ul>
+</section>
+
+<section class="note">
+  <h2>Lưu ý</h2>
+  <p>Mô hình dự đoán dựa trên <b>thói quen sống</b> chứ không phải đo trực tiếp cân nặng, nên đây chỉ là ước lượng tham khảo. Nếu bạn lo lắng về sức khoẻ, hãy gặp bác sĩ hoặc chuyên gia dinh dưỡng.</p>
+</section>
+{% endblock %}
